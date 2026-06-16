@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="tmux: a visual guide, first session to mastery">
+  <meta name="description" content="tmux: a visual guide">
   <title>tmux · A Visual Guide</title>
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0e14'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23a6e3a1'/%3E%3C/svg%3E">
@@ -29,7 +29,7 @@
   /* Catppuccin Mocha mantle */
   --bg-code-border: #313244;
   /* Catppuccin Mocha surface0 */
-  --bg-inline-code: rgba(244, 143, 177, 0.1);
+  --bg-inline-code: rgba(240, 56, 59, 0.1);
 
   /* Lines - pink-tinted */
   --border: #2d1e2a;
@@ -46,8 +46,8 @@
   --accent: #f0383b;
   --accent-soft: rgba(240, 56, 59, 0.1);
   --accent-hover: #ff5559;
-  --link: #f48fb1;
-  --link-hover: #f5a0c0;
+  --link: var(--accent);
+  --link-hover: var(--accent-hover);
 
   /* Semantic */
   --danger: #f38ba8;
@@ -89,7 +89,7 @@
   /* slightly darker warm header */
   --bg-code-border: #c8d0da;
   /* warm border */
-  --bg-inline-code: rgba(219, 39, 119, 0.07);
+  --bg-inline-code: rgba(212, 43, 46, 0.07);
 
   /* Lines */
   --border: #e0c8d4;
@@ -106,8 +106,8 @@
   --accent: #d42b2e;
   --accent-soft: rgba(212, 43, 46, 0.1);
   --accent-hover: #b82226;
-  --link: #db2777;
-  --link-hover: #be185d;
+  --link: var(--accent);
+  --link-hover: var(--accent-hover);
 
   /* Semantic */
   --danger: #b91c1c;
@@ -486,17 +486,6 @@ hr {
   display: flex;
   align-items: baseline;
   gap: 0.5rem;
-}
-
-.brand-title .accent-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--accent);
-  border-radius: 50%;
-  display: inline-block;
-  box-shadow: var(--shadow-glow);
-  flex-shrink: 0;
-  align-self: center;
 }
 
 .brand-subtitle {
@@ -1292,6 +1281,21 @@ tbody tr:hover {
     [data-theme="dark"] .floating-toc-link.active {
       background: rgba(255, 255, 255, 0.1);
     }
+    /* Lab entries in the rail read as hands-on steps: monospace + accent marker. */
+    .floating-toc-link.is-lab {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      color: var(--head-sub);
+    }
+    .floating-toc-link.is-lab::before {
+      content: "\25B8";
+      font-size: 0.7em;
+      opacity: 0.75;
+    }
+    .floating-toc-link.is-lab:hover,
+    .floating-toc-link.is-lab.active {
+      color: var(--head-sub);
+    }
     @media (max-width: 1100px) {
       .floating-toc { display: none !important; }
     }
@@ -1650,10 +1654,10 @@ tbody tr:hover {
 
 /* ============================================================
    Chapter heading format (matches the Observability guide):
-   "Ch N" pill + type badge + pink h2 + purple h3/h4.
+   "Ch N" pill + type badge + red h2 + purple h3/h4.
    ============================================================ */
-:root                { --head-main:#f778ba; --head-sub:#a371f7; }
-[data-theme="light"] { --head-main:#c2186a; --head-sub:#7c3aed; }
+:root                { --head-main:#f0383b; --head-sub:#a371f7; }
+[data-theme="light"] { --head-main:#d42b2e; --head-sub:#7c3aed; }
 
 .chapter-header{
   display:flex; align-items:center; flex-wrap:wrap; gap:12px;
@@ -1885,19 +1889,19 @@ h1                    { font-weight: 700; }
   letter-spacing: -2px;
 }
 
-/* Topic (section h2) and subtopic (h3) headings use the pink accent. Inter
+/* Topic (section h2) and subtopic (h3) headings use the brand red accent. Inter
    bold (700) on topics gives clear hierarchy without the chunky display
    weights; subtopics step down to semibold. */
 .md-content h2,
 .md-content h3 {
-  color: #be185d;
+  color: var(--accent);
   letter-spacing: -0.01em;
 }
 .md-content h2 { font-weight: 700; }
 .md-content h3 { font-weight: 600; }
 [data-theme="dark"] .md-content h2,
 [data-theme="dark"] .md-content h3 {
-  color: #f472b6;
+  color: var(--accent);
 }
 
 .brand-title { font-weight: 700; }
@@ -2071,11 +2075,6 @@ td kbd { font-size: 0.74rem; }
 
 <div class="sidebar-backdrop"></div>
 
-<button class="icon-btn corner-btn" id="menuToggle" aria-label="Open navigation"
-        style="position:fixed;top:0.75rem;left:0.85rem;z-index:300;width:30px;height:30px;border-radius:6px;">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-</button>
-
 <a class="icon-btn corner-btn github-corner-btn" id="githubLink"
    href="https://github.com/bishalcpgn/tmux" target="_blank" rel="noopener noreferrer"
    aria-label="View this project on GitHub" title="View on GitHub">
@@ -2091,10 +2090,8 @@ td kbd { font-size: 0.74rem; }
   <aside class="sidebar" id="sidebar" aria-label="Main navigation">
     <div class="brand">
       <div class="brand-title">
-        <span class="accent-dot"></span>
         <span>tmux<span class="italic-serif text-accent"> · </span>guide</span>
       </div>
-      <div class="brand-subtitle">First session to mastery</div>
       <span class="brand-edition">Visual Guide</span>
     </div>
     <div class="sidebar-search">
@@ -2114,14 +2111,14 @@ td kbd { font-size: 0.74rem; }
 
 <h1 id="start-here">tmux<span class="blink" aria-hidden="true"></span></h1>
 
-<span class="hero-kicker">Terminal multiplexer · first session to mastery</span>
+<span class="hero-kicker">Terminal multiplexer</span>
 
-<p class="lead">One terminal, many windows and panes, sessions that <strong>never die when you disconnect</strong>. This is a flow-based guide that builds the mental model first, then layers on commands, configuration, and plugins.</p>
+<p class="lead">One terminal, many windows and panes, sessions that <strong>never die when you disconnect</strong>. This guide builds the mental model first, then layers on commands, configuration, and plugins.</p>
 
 <div class="term">
   <div class="term-bar">
     <span class="tl r"></span><span class="tl y"></span><span class="tl g"></span>
-    <span class="term-title">dev@workstation: ~/project</span>
+    <span class="term-title">tmux@bishal: ~/project</span>
   </div>
   <div class="term-body">
     <div class="pane left">
@@ -2157,14 +2154,14 @@ td kbd { font-size: 0.74rem; }
 
 
 <!-- ============ 00 WHY ============ -->
-<h2 id="why">0. Why tmux</h2>
+<h2 id="why">1. Why tmux</h2>
 <p class="lead">Before any commands, a clear picture of what tmux <em>is</em> and the one problem it solves better than anything else: keeping your work alive when your connection to it does not. Read this section slowly; everything later in the guide builds on the model laid out here.</p>
 
 <blockquote class="info"><strong>How to read this guide</strong>
-<p>The sections are numbered and meant to be followed in order. Sections 0 to 2 are theory: the words, the alternatives, and the mental model. From section 3 onward you are at the keyboard, so keep a terminal open and run each command and lab as you reach it. If a key combination ever feels backwards, jump back to the model in section 2.</p>
+<p>The sections are numbered and meant to be followed in order. Section 1 is the theory. From section 2 onward you are at the keyboard, so keep a terminal open and run each command and lab as you reach it.</p>
 </blockquote>
 
-<h3 id="why-words">First, the words: terminal, shell, multiplexer</h3>
+<h3 id="why-words">1.1 First, the words: terminal, shell, multiplexer</h3>
 <p>Three terms get used loosely and trip up beginners. Pinning them down makes the rest of the guide obvious, because every tmux command acts on one of these layers.</p>
 <ul>
   <li><strong>Terminal (terminal emulator).</strong> The application window you type into, such as GNOME Terminal, iTerm2, Windows Terminal, Kitty, or Ghostty. It draws text and forwards your keystrokes. It does no computing of its own.</li>
@@ -2172,7 +2169,78 @@ td kbd { font-size: 0.74rem; }
   <li><strong>Terminal multiplexer.</strong> A layer that sits between the two. It runs <em>many</em> shells at once, organises them into windows and panes, and, most importantly, keeps them running even when no terminal is attached. tmux is that layer. "Multiplexer" simply means <em>many into one</em>: many independent shells delivered through one terminal connection.</li>
 </ul>
 
-<h3 id="why-persistence">The one idea that matters: detach and re-attach</h3>
+<p>The three are layers stacked one behind the next, and a single keystroke travels through all of them. Follow one round trip and each word's job becomes concrete: the terminal forwards what you type, tmux routes it to whichever shell is active, the shell runs it, and the output retraces the same path back to the screen.</p>
+
+<div class="fig">
+  <svg viewBox="0 0 760 400" role="img" aria-label="Sequence diagram following one keystroke from You through the terminal and tmux to the shell, and the output back again">
+    <defs>
+      <marker id="tsf-down" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="var(--magenta)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="tsf-up" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="var(--green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+
+    <!-- actors -->
+    <g>
+      <rect x="26"  y="40" width="148" height="54" rx="11" fill="var(--magenta-tint)" stroke="var(--magenta)" stroke-width=".75"/>
+      <text x="100" y="66" text-anchor="middle" font-size="13" font-weight="600" fill="var(--magenta)">You</text>
+      <text x="100" y="83" text-anchor="middle" font-size="9.5" fill="var(--text-3)">your keystrokes</text>
+
+      <rect x="213" y="40" width="148" height="54" rx="11" fill="var(--magenta-tint)" stroke="var(--magenta)" stroke-width=".75"/>
+      <text x="287" y="66" text-anchor="middle" font-size="13" font-weight="600" fill="var(--magenta)">Terminal</text>
+      <text x="287" y="83" text-anchor="middle" font-size="9.5" fill="var(--text-3)">draws + forwards</text>
+
+      <rect x="399" y="40" width="148" height="54" rx="11" fill="var(--magenta-tint)" stroke="var(--magenta)" stroke-width=".75"/>
+      <text x="473" y="66" text-anchor="middle" font-size="13" font-weight="600" fill="var(--magenta)">tmux</text>
+      <text x="473" y="83" text-anchor="middle" font-size="9.5" fill="var(--text-3)">multiplexer &middot; routes</text>
+
+      <rect x="586" y="40" width="148" height="54" rx="11" fill="var(--magenta-tint)" stroke="var(--magenta)" stroke-width=".75"/>
+      <text x="660" y="66" text-anchor="middle" font-size="13" font-weight="600" fill="var(--magenta)">Shell</text>
+      <text x="660" y="83" text-anchor="middle" font-size="9.5" fill="var(--text-3)">bash &middot; zsh &middot; executes</text>
+    </g>
+
+    <!-- lifelines -->
+    <g stroke="var(--text-3)" stroke-opacity=".5" stroke-width="1.25" stroke-dasharray="4 4">
+      <line x1="100" y1="94" x2="100" y2="368"/>
+      <line x1="287" y1="94" x2="287" y2="368"/>
+      <line x1="473" y1="94" x2="473" y2="368"/>
+      <line x1="660" y1="94" x2="660" y2="368"/>
+    </g>
+
+    <!-- request: keystroke travels in -->
+    <g>
+      <text x="193" y="121" text-anchor="middle" font-size="11" fill="var(--text-2)">press a key</text>
+      <line x1="100" y1="130" x2="285" y2="130" stroke="var(--magenta)" stroke-width="1.6" marker-end="url(#tsf-down)"/>
+
+      <text x="380" y="161" text-anchor="middle" font-size="11" fill="var(--text-2)">forward keystroke</text>
+      <line x1="287" y1="170" x2="471" y2="170" stroke="var(--magenta)" stroke-width="1.6" marker-end="url(#tsf-down)"/>
+
+      <text x="566" y="201" text-anchor="middle" font-size="11" fill="var(--text-2)">route to active shell</text>
+      <line x1="473" y1="210" x2="658" y2="210" stroke="var(--magenta)" stroke-width="1.6" marker-end="url(#tsf-down)"/>
+    </g>
+
+    <!-- the shell does the work: self-message -->
+    <path d="M660 228 H694 V244 H664" fill="none" stroke="var(--magenta)" stroke-width="1.6" marker-end="url(#tsf-down)"/>
+    <text x="652" y="240" text-anchor="end" font-size="10.5" fill="var(--text-2)">runs it (e.g. ls)</text>
+
+    <!-- response: output retraces the path -->
+    <g>
+      <text x="566" y="277" text-anchor="middle" font-size="11" fill="var(--green)">output bytes</text>
+      <line x1="660" y1="286" x2="475" y2="286" stroke="var(--green)" stroke-width="1.6" stroke-dasharray="5 5" marker-end="url(#tsf-up)"/>
+
+      <text x="380" y="313" text-anchor="middle" font-size="11" fill="var(--green)">output bytes</text>
+      <line x1="473" y1="322" x2="289" y2="322" stroke="var(--green)" stroke-width="1.6" stroke-dasharray="5 5" marker-end="url(#tsf-up)"/>
+
+      <text x="193" y="349" text-anchor="middle" font-size="11" fill="var(--green)">draw the text</text>
+      <line x1="287" y1="358" x2="102" y2="358" stroke="var(--green)" stroke-width="1.6" stroke-dasharray="5 5" marker-end="url(#tsf-up)"/>
+    </g>
+  </svg>
+  <div class="figcap">fig: tmux architecture</div>
+</div>
+
+<h3 id="why-persistence">1.2 The one idea that matters: detach and re-attach</h3>
 <p>tmux is built as a <strong>client-server</strong> program, and this is the whole reason it exists. When you first run <code>tmux</code>, it starts a long-lived <strong>server</strong> in the background and your terminal becomes a <strong>client</strong> attached to it. Your shells run inside the server, not inside your terminal window.</p>
 
 <p>Because of that split, your terminal is just a <em>viewport</em> you can connect to and disconnect from at will. Detach, and the server keeps every shell running; re-attach later, from the same terminal or over SSH from a different machine, and you are dropped back into exactly the state you left.</p>
@@ -2228,36 +2296,12 @@ td kbd { font-size: 0.74rem; }
   <div class="figcap">the server lane never breaks. only the client connects and disconnects.</div>
 </div>
 
-<blockquote class="success"><strong>Try it now</strong>
-<p>Run <code>tmux</code>, type <code>sleep 600</code>, press <span class="combo"><kbd class="pfx">Ctrl+b</kbd><kbd>d</kbd></span> to detach, then run <code>tmux attach</code>. Your sleep timer is still counting. That is the whole point.</p>
-</blockquote>
 
-<blockquote class="danger"><strong>What tmux does <em>not</em> save you from</strong>
-<p>tmux keeps your shells alive when the <strong>connection</strong> goes away: a closed terminal, a dropped SSH link, or a laptop that goes to sleep. It cannot save them if the machine running the tmux server is <strong>powered off or rebooted</strong>; the server process dies with it and the shells go with it. On a remote box you rarely reboot, the point is academic. On your own laptop it is real: a full shutdown ends the session. To survive reboots, the <a href="#plugins">tmux-resurrect</a> plugin can snapshot and restore your sessions.</p>
-</blockquote>
+<!-- ---- merged: tmux vs modern terminals (was section 1) ---- -->
+<h3 id="vs">1.3 tmux vs modern terminals</h3>
+<p>In 2026 your terminal emulator can almost certainly already split panes and open tabs. So is tmux still worth learning? Yes, but only once you see that a terminal and a multiplexer solve two different problems. This part draws the line, so you know when to reach for which.</p>
 
-<div class="lab-card">
-  <h4><span class="lab-badge">Lab 00</span> The Houdini Session</h4>
-  <p>Experience the core magic of tmux: detaching and re-attaching a live process.</p>
-  <ol class="lab-steps">
-    <li>Open your terminal and start a new tmux session by typing: <code>tmux</code></li>
-    <li>Launch a simple task that prints counts continuously: <code>for i in {1..100}; do echo "Count: $i"; sleep 1; done</code></li>
-    <li>Press your prefix sequence <span class="combo"><kbd class="pfx">Ctrl+b</kbd></span> then tap <kbd>d</kbd> to detach. Your terminal will drop back to your host shell.</li>
-    <li>List the active sessions running in the background: <code>tmux ls</code></li>
-    <li>Re-attach to resume: <code>tmux attach</code></li>
-  </ol>
-  <div class="lab-verify">
-    <div class="lab-verify-title">Verification Checklist</div>
-    <p>Upon re-attaching, the loop should still be printing counts (e.g., <code>Count: 15</code>, <code>Count: 16</code>) without interruption.</p>
-  </div>
-</div>
-
-
-<!-- ============ 01 TMUX vs MODERN TERMINALS ============ -->
-<h2 id="vs">1. tmux vs modern terminals</h2>
-<p class="lead">In 2026 your terminal emulator can almost certainly already split panes and open tabs. So is tmux still worth learning? Yes, but only once you see that a terminal and a multiplexer solve two different problems. This section draws the line, so you know when to reach for which.</p>
-
-<h3 id="vs-line">A terminal's split is a view; a tmux split is the process</h3>
+<h4 id="vs-line">A terminal's split is a view; a tmux split is the process</h4>
 <p>Modern emulators such as <strong>WezTerm, Kitty, iTerm2, Windows Terminal, and Ghostty</strong> draw tabs and split panes natively, with GPU-accelerated text, ligatures, and inline images. Those splits are <strong>local to the GUI</strong>: they live in the application running on the machine in front of you, and they disappear when you close the window. (A few terminals, such as <strong>Alacritty</strong>, deliberately ship no splits at all and expect you to bring a multiplexer.)</p>
 
 <p>tmux instead runs as a <strong>background server</strong>. Its windows and panes live inside that server, not in the GUI, so they survive a closed window, and when the server runs on a remote host they survive an SSH disconnect. That is the whole distinction: a terminal's split is a <em>view of a process</em>; a tmux split <em>is</em> the process, one you can walk away from and come back to.</p>
@@ -2266,7 +2310,7 @@ td kbd { font-size: 0.74rem; }
 <p>SSH into a server, start a long build inside tmux, detach, and close your laptop. The build keeps running <em>on the server</em>. Your terminal's own splits cannot do this: if the SSH link drops, anything running remotely without tmux is cut off with it.</p>
 </blockquote>
 
-<h3 id="vs-tradeoffs">Where tmux wins, where it loses</h3>
+<h4 id="vs-tradeoffs">Where tmux wins, where it loses</h4>
 <div class="table-wrap">
 <table>
 <thead><tr><th>What you need</th><th>Terminal's own splits</th><th>tmux</th></tr></thead>
@@ -2284,7 +2328,7 @@ td kbd { font-size: 0.74rem; }
 
 <p>The rule of thumb: <strong>if you never leave one machine and never disconnect, your terminal's own splits are simpler and render better.</strong> The moment remote servers, long-running jobs, or flaky connections enter the picture, tmux earns its place, and because it runs inside <em>any</em> terminal, learning it once carries across every machine and emulator you will ever use.</p>
 
-<h3 id="vs-alternatives">The 2026 landscape</h3>
+<h4 id="vs-alternatives">The 2026 landscape</h4>
 <p>tmux is not the only multiplexer, and the boundary with terminals is blurring:</p>
 <ul>
   <li><strong>GNU screen</strong>: the original multiplexer that tmux largely replaced. Still preinstalled on some older systems, but rarely chosen for new setups.</li>
@@ -2292,12 +2336,11 @@ td kbd { font-size: 0.74rem; }
   <li><strong>WezTerm</strong>: a terminal with its <em>own</em> built-in multiplexer that can persist sessions and attach to remote hosts, blurring the terminal/multiplexer divide.</li>
   <li><strong>Ghostty</strong>: a fast, modern terminal (1.0 landed at the end of 2024) that deliberately leaves multiplexing out and points you at tmux or Zellij for it.</li>
 </ul>
-<p>The takeaway for a beginner: <strong>learn tmux first.</strong> It is the common denominator: available almost everywhere, expected on servers, and the tool every alternative is measured against. Once it is second nature, trying Zellij or your terminal's native splits is easy.</p>
 
 
-<!-- ============ 02 MODEL ============ -->
-<h2 id="model">2. The mental model</h2>
-<p class="lead">Everything in tmux nests. Get this one picture in your head and every command afterward will make sense, because each command operates on one of these four levels.</p>
+<!-- ---- merged: the mental model (was section 2) ---- -->
+<h3 id="model">1.4 The mental model</h3>
+<p>Everything in tmux nests. Get this one picture in your head and every command afterward will make sense, because each command operates on one of these four levels.</p>
 
 <div class="fig">
   <svg viewBox="0 0 760 392" role="img" aria-label="Nested boxes showing the tmux hierarchy: server contains sessions, sessions contain windows, windows contain panes">
@@ -2359,7 +2402,7 @@ td kbd { font-size: 0.74rem; }
   <li><strong>Pane.</strong> A split of a window. One window can be carved into many panes, each running its own shell.</li>
 </ul>
 
-<h3 id="model-anatomy">Anatomy of a real tmux screen</h3>
+<h4 id="model-anatomy">Anatomy of a real tmux screen</h4>
 <p>Here is the screen from the top of this page, with each part named. Every term maps to a later section: the <a href="#sessions">session</a> sits on the left of the status bar, the <a href="#windows">windows</a> line up beside it (the <code>*</code> marks the active one), the <a href="#panes">panes</a> split the current window, and the status bar across the bottom ties them together.</p>
 
 <div class="fig">
@@ -2398,18 +2441,18 @@ td kbd { font-size: 0.74rem; }
 
     <!-- callout: panes -->
     <text x="380" y="32" text-anchor="middle" font-size="13" font-weight="700" fill="var(--head-main)">PANES</text>
-    <text x="380" y="47" text-anchor="middle" font-size="10" fill="var(--text-3)">one window split into shells &middot; section 6</text>
+    <text x="380" y="47" text-anchor="middle" font-size="10" fill="var(--text-3)">one window split into shells &middot; section 5</text>
     <line x1="348" y1="54" x2="306" y2="92" stroke="var(--text-3)" stroke-width="1.2" marker-end="url(#anat-ar)"/>
     <line x1="412" y1="54" x2="456" y2="92" stroke="var(--text-3)" stroke-width="1.2" marker-end="url(#anat-ar)"/>
 
     <!-- callout: session -->
     <text x="116" y="250" text-anchor="middle" font-size="12" font-weight="700" fill="var(--head-main)">SESSION</text>
-    <text x="116" y="265" text-anchor="middle" font-size="10" fill="var(--text-3)">section 4</text>
+    <text x="116" y="265" text-anchor="middle" font-size="10" fill="var(--text-3)">section 3</text>
     <line x1="158" y1="257" x2="197" y2="257" stroke="var(--text-3)" stroke-width="1.2" marker-end="url(#anat-ar)"/>
 
     <!-- callout: windows -->
     <text x="300" y="312" text-anchor="middle" font-size="12" font-weight="700" fill="var(--head-main)">WINDOWS</text>
-    <text x="300" y="327" text-anchor="middle" font-size="10" fill="var(--text-3)">like tabs &middot; * = active &middot; section 5</text>
+    <text x="300" y="327" text-anchor="middle" font-size="10" fill="var(--text-3)">like tabs &middot; * = active &middot; section 4</text>
     <line x1="318" y1="300" x2="328" y2="272" stroke="var(--text-3)" stroke-width="1.2" marker-end="url(#anat-ar)"/>
 
     <!-- callout: status bar -->
@@ -2420,24 +2463,9 @@ td kbd { font-size: 0.74rem; }
   <div class="figcap">the same screen from the top of the page, with each tmux part labelled.</div>
 </div>
 
-<div class="lab-card">
-  <h4><span class="lab-badge">Lab 01</span> The Nested Scaffold</h4>
-  <p>Build and navigate the entire tmux hierarchy: Server &rarr; Session &rarr; Window &rarr; Pane.</p>
-  <ol class="lab-steps">
-    <li>Create a new session named <code>sandbox</code>: <code>tmux new -s sandbox</code></li>
-    <li>Create a second window: press <span class="combo"><kbd class="pfx">Ctrl+b</kbd><kbd>c</kbd></span></li>
-    <li>Split this new window into two side-by-side panes: press <span class="combo"><kbd class="pfx">Ctrl+b</kbd><kbd>%</kbd></span></li>
-    <li>Identify the structure by looking at the green status bar: note the session name on the left, and the two window indexes in the middle.</li>
-  </ol>
-  <div class="lab-verify">
-    <div class="lab-verify-title">Verification Checklist</div>
-    <p>Verify that your status bar shows <code>sandbox</code> as the session, with windows <code>1:zsh</code> and <code>2:zsh*</code> (where <code>*</code> denotes the active window containing your two split panes).</p>
-  </div>
-</div>
 
-
-<!-- ============ 02 PREFIX ============ -->
-<h2 id="prefix">3. The prefix key</h2>
+<!-- ============ 01 PREFIX ============ -->
+<h2 id="prefix">2. The prefix key</h2>
 <p class="lead">tmux needs a way to tell its own commands apart from text you are typing into a shell. The answer is the prefix: a key you press first, which puts tmux into "listen" mode for the next single keystroke.</p>
 
 <div class="fig">
@@ -2468,7 +2496,7 @@ td kbd { font-size: 0.74rem; }
 <p>Many people find <code>Ctrl+b</code> an awkward stretch and remap the prefix to something easier to reach. You will do exactly that in the <a href="#config">configuration</a> section. Until then, this guide uses the default <code>Ctrl+b</code>.</p>
 </blockquote>
 
-<h3 id="prefix-keys">Three keys to know before anything else</h3>
+<h3 id="prefix-keys">2.1 Three keys to know before anything else</h3>
 <div class="table-wrap">
 <table>
 <thead><tr><th>Keys</th><th>Action</th></tr></thead>
@@ -2478,6 +2506,37 @@ td kbd { font-size: 0.74rem; }
   <tr><td><span class="combo"><kbd class="pfx">prefix</kbd><kbd>d</kbd></span></td><td>Detach from the session and drop back to your normal shell.</td></tr>
 </tbody>
 </table>
+</div>
+
+<div class="lab-card">
+  <h4><span class="lab-badge">Lab 00</span> The Houdini Session</h4>
+  <p>Experience the core magic of tmux: detaching and re-attaching a live process.</p>
+  <ol class="lab-steps">
+    <li>Open your terminal and start a new tmux session by typing: <code>tmux</code></li>
+    <li>Launch a simple task that prints counts continuously: <code>for i in {1..100}; do echo "Count: $i"; sleep 1; done</code></li>
+    <li>Press your prefix sequence <span class="combo"><kbd class="pfx">Ctrl+b</kbd></span> then tap <kbd>d</kbd> to detach. Your terminal will drop back to your host shell.</li>
+    <li>List the active sessions running in the background: <code>tmux ls</code></li>
+    <li>Re-attach to resume: <code>tmux attach</code></li>
+  </ol>
+  <div class="lab-verify">
+    <div class="lab-verify-title">Verification Checklist</div>
+    <p>Upon re-attaching, the loop should still be printing counts (e.g., <code>Count: 15</code>, <code>Count: 16</code>) without interruption.</p>
+  </div>
+</div>
+
+<div class="lab-card">
+  <h4><span class="lab-badge">Lab 01</span> The Nested Scaffold</h4>
+  <p>Build and navigate the entire tmux hierarchy: Server &rarr; Session &rarr; Window &rarr; Pane.</p>
+  <ol class="lab-steps">
+    <li>Create a new session named <code>sandbox</code>: <code>tmux new -s sandbox</code></li>
+    <li>Create a second window: press <span class="combo"><kbd class="pfx">Ctrl+b</kbd><kbd>c</kbd></span></li>
+    <li>Split this new window into two side-by-side panes: press <span class="combo"><kbd class="pfx">Ctrl+b</kbd><kbd>%</kbd></span></li>
+    <li>Identify the structure by looking at the green status bar: note the session name on the left, and the two window indexes in the middle.</li>
+  </ol>
+  <div class="lab-verify">
+    <div class="lab-verify-title">Verification Checklist</div>
+    <p>Verify that your status bar shows <code>sandbox</code> as the session, with windows <code>1:zsh</code> and <code>2:zsh*</code> (where <code>*</code> denotes the active window containing your two split panes).</p>
+  </div>
 </div>
 
 <div class="lab-card">
@@ -2497,11 +2556,11 @@ td kbd { font-size: 0.74rem; }
 
 
 <!-- ============ 03 SESSIONS ============ -->
-<h2 id="sessions">4. Sessions</h2>
+<h2 id="sessions">3. Sessions</h2>
 <p class="lead">A session is your top-level workspace. Most commands here are typed in your normal shell (before attaching) and start with <code>tmux</code>. The shortcuts work once you are inside.</p>
 
-<h3 id="sessions-loop">The everyday loop: detach, list, attach</h3>
-<p>Nearly all session work is one short cycle: leave a session running, see what is alive, then drop back into the one you want. Section 0 covered <strong>detaching</strong>; the two moves that complete the loop are <strong>listing</strong> and <strong>attaching</strong>. Learn these three and you already have the core of tmux.</p>
+<h3 id="sessions-loop">3.1 The everyday loop: detach, list, attach</h3>
+<p>Nearly all session work is one short cycle: leave a session running, see what is alive, then drop back into the one you want. Section 1 covered <strong>detaching</strong>; the two moves that complete the loop are <strong>listing</strong> and <strong>attaching</strong>. Learn these three and you already have the core of tmux.</p>
 
 <div class="term">
   <div class="term-bar">
@@ -2526,7 +2585,7 @@ td kbd { font-size: 0.74rem; }
 
 <p>The same loop also covers an <em>involuntary</em> detach. If your SSH connection drops or your terminal closes, the session is just left running on the server, so <code>tmux ls</code> followed by <code>tmux attach -t dev</code> drops you back exactly where you were. The tables below break each step out in full.</p>
 
-<h3 id="sessions-shell">From your shell</h3>
+<h3 id="sessions-shell">3.2 From your shell</h3>
 <div class="table-wrap">
 <table>
 <thead><tr><th>Command</th><th>Action</th></tr></thead>
@@ -2542,7 +2601,7 @@ td kbd { font-size: 0.74rem; }
 </table>
 </div>
 
-<h3 id="sessions-inside">From inside tmux</h3>
+<h3 id="sessions-inside">3.3 From inside tmux</h3>
 <div class="table-wrap">
 <table>
 <thead><tr><th>Keys</th><th>Action</th></tr></thead>
@@ -2577,7 +2636,7 @@ td kbd { font-size: 0.74rem; }
 
 
 <!-- ============ 04 WINDOWS ============ -->
-<h2 id="windows">5. Windows</h2>
+<h2 id="windows">4. Windows</h2>
 <p class="lead">Windows are the tabs of a session. Each one fills the whole screen and shows up in the status bar as <code>number:name</code>. The active window is marked with an asterisk.</p>
 
 <div class="table-wrap">
@@ -2618,7 +2677,7 @@ td kbd { font-size: 0.74rem; }
 
 
 <!-- ============ 05 PANES ============ -->
-<h2 id="panes">6. Panes</h2>
+<h2 id="panes">5. Panes</h2>
 <p class="lead">Panes split a single window into multiple shells you can see at once. This is where tmux feels powerful: editor on the left, server logs top-right, a free shell bottom-right, all in one view.</p>
 
 <div class="fig">
@@ -2664,7 +2723,7 @@ td kbd { font-size: 0.74rem; }
 <p><code>%</code> is a vertical bar, so it splits into <strong>left and right</strong>. <code>"</code> looks like it lies flat, so it splits into <strong>top and bottom</strong>. If a remembered shortcut feels backwards, this is almost always why.</p>
 </blockquote>
 
-<h3 id="panes-move">Creating and moving between panes</h3>
+<h3 id="panes-move">5.1 Creating and moving between panes</h3>
 <div class="table-wrap">
 <table>
 <thead><tr><th>Keys</th><th>Action</th></tr></thead>
@@ -2679,7 +2738,7 @@ td kbd { font-size: 0.74rem; }
 </table>
 </div>
 
-<h3 id="panes-resize">Resizing, zooming, and rearranging</h3>
+<h3 id="panes-resize">5.2 Resizing, zooming, and rearranging</h3>
 <div class="table-wrap">
 <table>
 <thead><tr><th>Keys</th><th>Action</th></tr></thead>
@@ -2714,7 +2773,7 @@ td kbd { font-size: 0.74rem; }
 
 
 <!-- ============ 06 COPY MODE ============ -->
-<h2 id="copy">7. Copy mode</h2>
+<h2 id="copy">6. Copy mode</h2>
 <p class="lead">Copy mode lets you scroll back through output, search it, and copy text using only the keyboard. tmux ships with emacs-style keys by default, but most people switch to vi-style keys (shown here, and set up in the config section).</p>
 
 <div class="table-wrap">
@@ -2755,7 +2814,7 @@ td kbd { font-size: 0.74rem; }
 
 
 <!-- ============ 07 CONFIG ============ -->
-<h2 id="config">8. Configuration</h2>
+<h2 id="config">7. Configuration</h2>
 <p class="lead">tmux reads <code>~/.tmux.conf</code> on startup. This is where you make it yours: a friendlier prefix, mouse support, vi keys, a base index that starts at 1, and a cleaner status bar. Create the file and paste the block below.</p>
 
 <pre class="codehilite"><code class="language-bash"><span class="tok-cmt"># --- prefix: Ctrl+Space, easier than Ctrl+b and rarely clashes ---</span>
@@ -2798,7 +2857,7 @@ td kbd { font-size: 0.74rem; }
 
 
 <!-- ============ 08 PLUGINS ============ -->
-<h2 id="plugins">9. Plugins</h2>
+<h2 id="plugins">8. Plugins</h2>
 <p class="lead">tmux plugins add useful helpers like clipboard support, session restore, and status line polish. A plugin manager keeps everything tidy and lets you install or update with a single keystroke.</p>
 
 <div class="map-grid">
@@ -2840,7 +2899,7 @@ td kbd { font-size: 0.74rem; }
 
 
 <!-- ============ 09 ADVANCED ============ -->
-<h2 id="advanced">10. Advanced</h2>
+<h2 id="advanced">9. Advanced</h2>
 <p class="lead">Advanced tmux flows combine scripting, status customization, and session persistence. These patterns keep tmux fast and predictable while letting you automate routine setup.</p>
 
 <div class="table-wrap">
@@ -2886,7 +2945,7 @@ tmux attach-session -t dev</code></pre>
 
 
 <!-- ============ 10 CHEAT SHEET ============ -->
-<h2 id="cheatsheet">11. Cheat sheet</h2>
+<h2 id="cheatsheet">10. Cheat sheet</h2>
 <p class="lead">Keep these commands handy while you learn tmux. They cover the most common session, window, and pane actions you will use every day.</p>
 
 <div class="table-wrap">
@@ -3313,11 +3372,27 @@ tmux attach-session -t dev</code></pre>
 
       const tocTitleHTML = `<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg> On this page`;
 
-      // Build a per-section descriptor: its h3 headings become the TOC entries.
+      // Build a per-section descriptor: h3 headings AND lab cards become TOC entries,
+      // collected in document order so labs show up in the "On this page" rail too.
       const perSection = sections.map(section => {
-        const h3s = Array.from(section.querySelectorAll('h3')).filter(h => h.id);
-        return { section, h3s };
-      }).filter(d => d.h3s.length > 0);
+        const nodes = Array.from(section.querySelectorAll('h3, .lab-card'));
+        const entries = nodes.map(el => {
+          if (el.classList.contains('lab-card')) {
+            const badge = el.querySelector('.lab-badge');
+            const h4 = el.querySelector('h4');
+            const badgeText = badge ? badge.textContent.trim() : '';
+            const fullText = h4 ? h4.textContent.trim() : badgeText;
+            const titleText = badgeText ? fullText.replace(badgeText, '').trim() : fullText;
+            if (!el.id) el.id = slug(badgeText) || slug('lab ' + titleText);
+            const label = badgeText && titleText ? badgeText + ' · ' + titleText : (fullText || 'Lab');
+            return { el, id: el.id, label, isLab: true };
+          }
+          if (!el.id) return null;
+          const label = el.textContent.replace(/^\s*(\d+(\.\d+)*|Section\s+[A-Z]|Step\s+\d+)[:.\s-]+/i, '').trim() || el.textContent.trim();
+          return { el, id: el.id, label, isLab: false };
+        }).filter(Boolean);
+        return { section, entries };
+      }).filter(d => d.entries.length > 0);
 
       function renderToc(desc) {
         const tocTitle = document.createElement('div');
@@ -3328,17 +3403,15 @@ tmux attach-session -t dev</code></pre>
         tocList.className = 'floating-toc-list';
 
         const subLinks = [];
-        desc.h3s.forEach(h3 => {
-          // Strip a leading "N.N " or "Section X:" number prefix for a clean label.
-          const label = h3.textContent.replace(/^\s*(\d+(\.\d+)*|Section\s+[A-Z]|Step\s+\d+)[:.\s-]+/i, '').trim() || h3.textContent.trim();
+        desc.entries.forEach(entry => {
           const li = document.createElement('li');
           const a = document.createElement('a');
-          a.href = '#' + h3.id;
-          a.className = 'floating-toc-link';
-          a.textContent = label;
+          a.href = '#' + entry.id;
+          a.className = 'floating-toc-link' + (entry.isLab ? ' is-lab' : '');
+          a.textContent = entry.label;
           a.addEventListener('click', (e) => {
             e.preventDefault();
-            const target = document.getElementById(h3.id);
+            const target = document.getElementById(entry.id);
             if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
           });
           li.appendChild(a);
@@ -3352,10 +3425,10 @@ tmux attach-session -t dev</code></pre>
 
         // ScrollSpy for the active subsection.
         let activeIndex = 0;
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const index = desc.h3s.findIndex(h => h.id === entry.target.id);
+        const observer = new IntersectionObserver((obsEntries) => {
+          obsEntries.forEach(obsEntry => {
+            if (obsEntry.isIntersecting) {
+              const index = desc.entries.findIndex(e => e.id === obsEntry.target.id);
               if (index !== -1) {
                 activeIndex = index;
                 subLinks.forEach((a, i) => a.classList.toggle('active', i === activeIndex));
@@ -3363,7 +3436,7 @@ tmux attach-session -t dev</code></pre>
             }
           });
         }, { rootMargin: '-20% 0px -60% 0px', threshold: 0 });
-        desc.h3s.forEach(h3 => observer.observe(h3));
+        desc.entries.forEach(e => observer.observe(e.el));
         return observer;
       }
 
